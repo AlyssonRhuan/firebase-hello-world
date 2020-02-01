@@ -1,5 +1,5 @@
-import HomeView from '../views/Home'
-import UserView from '../views/User'
+import HomeView from '../views/homeView/Home'
+import UserView from '../views/userView/User'
 
 export default [
     {        

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {BrowserRouter as Router, Switch, Route, NavLink} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, NavLink, Link } from "react-router-dom";
 import Rotas from './config/Rotas'
 import GlobablConfig from './config/Global'
 
@@ -7,8 +7,10 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  useEffect(() => {
-    
+  const [menuAtivo, setMenuAtivo] = useState(false);
+
+  useEffect(() => {    
+
   }, [])
 
   return (    
@@ -16,20 +18,27 @@ function App() {
       <div className="container-fluid">
         <div className="row">        
 
-          <header style={{color:'white'}} className="col-12 navbar navbar-dark bg-primary justify-content-between">
-            <span>
-              Menu
+          {/* BARRA SUPERIOR */}
+          <header style={{color:'white'}} className="col-12 navbar navbar-dark bg-primary justify-content-between px-5">
+            <span className="pl-2">
+              <a onClick={()=>setMenuAtivo(true)}>Menu</a>
             </span>
             <span>
               {GlobablConfig.AppName}
             </span>
-            <span>
+            <span className="pr-2">
               User
             </span>
           </header>   
 
-          {/* <div className="col-2">       
-            <ul className="nav nav-pills flex-column my-3">
+          {/* MENU LATERAL */}
+          <div style={{left:`${menuAtivo ? '0px' : '-300px' }`}} className="sideBarMenu">       
+            <ul className="nav nav-pills flex-column my-3">              
+              <Link 
+                onClick={()=>setMenuAtivo(false)}
+                className="nav-link sideBarMenuClose">
+                  Close
+              </Link>
               {
                 Rotas.map(
                   (rota) => <li className="nav-item">
@@ -37,6 +46,7 @@ function App() {
                       exact={true} 
                       activeClassName='active' 
                       className="nav-link"
+                      onClick={()=>setMenuAtivo(false)}
                       to={rota.path}>
                         {rota.label}
                       </NavLink>
@@ -44,15 +54,9 @@ function App() {
                 )
               }
             </ul>
-          </div> */}          
+          </div>     
 
-          <nav aria-label="breadcrumb" className="col-12 pt-3">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Library</li>
-            </ol>
-          </nav>
-
+          {/* SWITCH DE ROTA */}
           <Switch className="col-12">
             {
               Rotas.map(

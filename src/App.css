@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+
+.sideBarMenu {
+  position: absolute;
+  width: 300px;
+  height: 100vh;
+  background-color: #282c34;
+  z-index: 1;
+  transition: 1s;
+  top: 0px;
+}
+
+header a:hover {
+  cursor: pointer;
+}
+
+.sideBarMenuClose {
+  color: white;
+  font-size: 20px;
+  text-align: right;
+}
+
+.buttonIcon {
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  height: 25px;
+  width: 25px;
+  transition: .5s;
+}
+
+.buttonIcon:hover {  
+  fill: blue;
+}
+
+.App tr{
+  height: 60px;
+  text-align: center;
+  vertical-align: middle;
+}
