@@ -104,7 +104,6 @@ function User() {
           ? <table className="table table-striped">
               <thead className="thead-dark">
                 <tr>
-                  <th scope="col">Key</th>
                   <th scope="col">Nome</th>
                   <th scope="col">Login</th>
                   <th style={{width:'350px'}} scope="col">Action</th>
@@ -114,7 +113,6 @@ function User() {
                 {
                   users && users.map(
                     (user) => <tr>
-                      <td>{user.key}</td>
                       <td>{user.name}</td>
                       <td>{user.login}</td>
                       <td>

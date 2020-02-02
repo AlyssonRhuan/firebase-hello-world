@@ -72,7 +72,7 @@ export default class FirebaseService {
 
     static update = (table, id, object) => new Promise((resolve, reject) => {
         try {   
-            const ref = firebaseDatabase.ref(table).update({object});
+            const ref = firebaseDatabase.ref(table + '/' + id).update(object);
             resolve(id);        
         } catch (error) {
             console.log(error);
