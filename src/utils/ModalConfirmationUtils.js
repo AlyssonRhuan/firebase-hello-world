@@ -1,35 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
-import IconsUtils from '../utils/IconsUtils'
 
-function ModalComponent(props) {
+function ModalConfirmationUtils(props) {
     const [isOpen, setIsOpen] = useState(false)
     
   useEffect(() => {
     setIsOpen(props.isOpen)
   }, [])
 
+  function response(response){ 
+    props.onResponse(response)
+    closeModal()
+  }
+
   function closeModal(){      
     setIsOpen(!isOpen)
+    props.onClose(false)
   }
 
   return (
     <main>
         <section>
             <Modal isOpen={isOpen}>
+
                 <ModalHeader>
                     {props.title}
                 </ModalHeader>
+                
                 <ModalBody>
-                    Body
+                  <span>
+                    {props.text}
+                  </span>
                 </ModalBody>
+
                 <ModalFooter>
-                    <button type="button" onClick={() => closeModal()} class="btn btn-danger">Cancel</button>
+                    <button type="button" onClick={() => response(true)} class="btn btn-success">Yes</button>
+                    <button type="button" onClick={() => response(false)} class="btn btn-danger">No</button>
                 </ModalFooter>
+
             </Modal>
         </section>
     </main>
   );
 }
 
-export default ModalComponent;
+export default ModalConfirmationUtils;

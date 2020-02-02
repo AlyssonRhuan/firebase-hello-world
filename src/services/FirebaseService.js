@@ -3,47 +3,80 @@ import {firebaseDatabase} from '../utils/firebaseUtils'
 // referencia https://blog.tecsinapse.com.br/criando-uma-aplica%C3%A7%C3%A3o-react-firebase-passo-a-passo-9ebc5a8a442f
 
 export default class FirebaseService {
-    static getDataList = (nodePath, callback, size = 10) => {
-        let query = firebaseDatabase.ref(nodePath).limitToLast(size);
-        query.on('value', dataSnapshot => {
-            let items = [];
-            dataSnapshot.forEach(childSnapshot => {
-                let item = childSnapshot.val();
-                item['key'] = childSnapshot.key;
-                items.push(item);
-            });
-            callback(items);
-        });
+    static getAll = (table, size = 10) => new Promise((resolve, reject) => {
+        try{
+            // CONSTRUÇÃO DA QUERY
+            const query = firebaseDatabase
+                .ref(table)
+                .limitToLast(size);
 
-        return query;
-    };
-
-    static getDataListPaginate = (nodePath, pagina, size = 10) => new Promise((resolve, reject)=>{
-        let query = firebaseDatabase
-            .ref(nodePath)
-            .limitToLast(size);
-
+            // EXECUTANDO E PREENCHENDO ITENS
             query.on('value', dataSnapshot => {
                 const items = [];
                 dataSnapshot.forEach(childSnapshot => {
-                    const item = childSnapshot.val();
+                    let item = childSnapshot.val();
                     item['key'] = childSnapshot.key;
                     items.push(item);
                 });
-
-
                 resolve(items);
-        });
-    })
+            });
+            
+        }
+        catch(error){
+            console.log(error);
+            reject([]);
+        }
+    });
     
-    static pushData = (node, objToSubmit) => {
-        const ref = firebaseDatabase.ref(node).push();
-        const id = firebaseDatabase.ref(node).push().key;
-        ref.set(objToSubmit);
-        return id;
-    };
+    static getAllPaginate = (table, pagina, size = 10) => new Promise((resolve, reject)=>{
+        try {
+             
+        } 
+        catch (error) {            
+            console.log(error);
+            reject([]);
+        }
+    })
 
-    static remove = (id, node) => {
-        return firebaseDatabase.ref(node + '/' + id).remove();
-    };
+    static getByKey = (table, size = 10) => new Promise((resolve, reject) => {
+        try{
+            
+        }
+        catch(error){
+            console.log(error);
+            reject([]);
+        }
+    });
+    
+    static push = (table, object) => new Promise((resolve, reject) => {
+        try {
+            const ref = firebaseDatabase.ref(table).push();
+            const id = firebaseDatabase.ref(table).push().key;
+            ref.set(object);
+            resolve(id);        
+        } catch (error) {
+            console.log(error);
+            reject([]);
+        }
+    });
+
+    static delete = (table, id) => new Promise((resolve, reject) => {
+        try {
+            const deleteObj = firebaseDatabase.ref(table + '/' + id).remove();
+            resolve(deleteObj);        
+        } catch (error) {
+            console.log(error);
+            reject([]);
+        }
+    });
+
+    static update = (table, id, object) => new Promise((resolve, reject) => {
+        try {   
+            const ref = firebaseDatabase.ref(table).update({object});
+            resolve(id);        
+        } catch (error) {
+            console.log(error);
+            reject([]);
+        }
+    });
 }

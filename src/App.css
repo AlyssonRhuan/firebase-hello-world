@@ -71,7 +71,15 @@ header a:hover {
 }
 
 .App tr{
-  height: 60px;
   text-align: center;
   vertical-align: middle;
+}
+
+td a {
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.Loading {
+  padding-top: 100px;
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Switch, Route, NavLink, Link } from "react-router-dom";
-import Rotas from './config/Rotas'
-import GlobablConfig from './config/Global'
+import Rotas from './configs/Rotas'
+import GlobablConfig from './configs/Global'
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
