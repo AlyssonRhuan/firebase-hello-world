@@ -1,75 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import FirebaseService from '../../services/FirebaseService'
+import ModalConfirmation from '../../utils/ModalConfirmationUtils'
+import DataBaseService from '../../services/DataBaseService'
 import IconsUtils from '../../utils/IconsUtils'
 import ModalUser from './ModalUser'
 import Loading from '../../components/Loading'
-import ModalConfirmation from '../../utils/ModalConfirmationUtils'
 
 const TABLE_NAME = 'users'
 
 function User() {
   const [users, setUsers] = useState();
-  const [modalAddUser, setModalAddUser] = useState(false);
-  const [modalEditUser, setModalEditUser] = useState(false);
-  const [modalDeleteUser, setModalDeleteUser] = useState(false);
   const [userToAction, setUserToAction] = useState()
-  
-  useEffect( async() => {
+  const [modal, setModal] = useState(undefined)
+
+  useEffect(async () => {
     getAllUsers();
-  }, [])  
-  
-
-  // FUNÇÕES 
-  async function getAllUsers() {
-    const usuarios = await FirebaseService.getAll(TABLE_NAME)
-    setUsers(usuarios)
-}
-
-  function addUser(dados){  
-    const idUser = FirebaseService.push(TABLE_NAME, dados);
-  }
-
-  function editUser(dados){  
-    const idUser = FirebaseService.update(TABLE_NAME, dados.key, dados);
-  }
-
-  function deleteUser(validacao){  
-    if(validacao){
-      const idUser = FirebaseService.delete(TABLE_NAME, userToAction.key);
-    }
-
-    closeModalDeleteUser();
-  }
+  }, [])
 
   // FUNÇÕES PARA ABRIR MODAL
 
-  function openModalAddUser(){
-    setModalAddUser(true);
+  function openModal(modal, user) {
+    setModal(modal);
+    setUserToAction(user);
   }
 
-  function closeModalAddUser(){
-    setModalAddUser(false);
+  function closeModal() {
+    setModal(undefined);
     getAllUsers();
   }
 
-  function openModalDeleteUser(user){
-    setUserToAction(user)
-    setModalDeleteUser(true);
+  // FUNÇÕES 
+
+  async function getAllUsers() {
+    const usuarios = await DataBaseService.getAll(TABLE_NAME)
+    setUsers(usuarios)
   }
 
-  function closeModalDeleteUser(){
-    setModalDeleteUser(false);
-    getAllUsers();
+  function addUser(dados) {
+    DataBaseService.push(TABLE_NAME, dados);
   }
 
-  function openModalEditUser(user){
-    setUserToAction(user)
-    setModalEditUser(true);
+  function editUser(dados) {
+    DataBaseService.update(TABLE_NAME, dados.key, dados);
   }
 
-  function closeModalEditUser(){
-    setModalEditUser(false);
-    getAllUsers();
+  function deleteUser(validacao) {
+    if (validacao) {
+      DataBaseService.delete(TABLE_NAME, userToAction.key);
+    }
+
+    closeModal();
   }
 
   // RENDER
@@ -87,12 +66,12 @@ function User() {
         </nav>
 
         {/* BARRA MENU INTERNO */}
-        <div style={{alignItems:'center'}} className="col-12 row justify-content-between mx-0 px-0">
+        <div style={{ alignItems: 'center' }} className="col-12 row justify-content-between mx-0 px-0">
           <span>
             <h1 className="display-4">Users</h1>
           </span>
           <span>
-            <button type="button" className="btn btn-success ml-2" onClick={() => openModalAddUser()}>
+            <button type="button" className="btn btn-success ml-2" onClick={() => openModal('ADD', undefined)}>
               Add User
             </button>
           </span>
@@ -101,12 +80,12 @@ function User() {
         {/* TABELA */}
         {
           users
-          ? <table className="table table-striped">
+            ? <table className="table table-striped">
               <thead className="thead-dark">
                 <tr>
                   <th scope="col">Nome</th>
                   <th scope="col">Login</th>
-                  <th style={{width:'350px'}} scope="col">Action</th>
+                  <th style={{ width: '350px' }} scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -116,48 +95,47 @@ function User() {
                       <td>{user.name}</td>
                       <td>{user.login}</td>
                       <td>
-                        <a  onClick={() => openModalEditUser(user)}><img className="buttonIcon" src={IconsUtils.Edit} /> Edit</a>
-                        <a  onClick={() => openModalDeleteUser(user)}><img className="buttonIcon" src={IconsUtils.Delete}/> Delete</a>
+                        <a onClick={() => openModal('EDI', user)}><img className="buttonIcon" src={IconsUtils.Edit} /> Edit</a>
+                        <a onClick={() => openModal('DEL', user)}><img className="buttonIcon" src={IconsUtils.Delete} /> Delete</a>
                       </td>
                     </tr>
                   )
-                }  
+                }
               </tbody>
             </table>
-          : <Loading />
+            : <Loading />
         }
-        
 
       </section>
-      <section>        
+      <section>
 
-      {/* MODAIS */}
-      {
-        modalAddUser && <ModalUser 
-          title="Add user"
-          data={undefined}
-          onClose={closeModalAddUser}
-          onSave={addUser}
-          isOpen={modalAddUser}/>
-      }
+        {/* MODAIS */}
+        {
+          modal && modal == 'ADD' && <ModalUser
+            title="Add user"
+            data={undefined}
+            onClose={closeModal}
+            onSave={addUser}
+            isOpen={modal == 'ADD'} />
+        }
 
-      {
-        modalEditUser && <ModalUser 
-          title="Edit user"
-          data={userToAction}
-          onClose={closeModalEditUser}
-          onSave={editUser}
-          isOpen={modalEditUser}/>
-      }
+        {
+          modal && modal == 'EDI' && <ModalUser
+            title="Edit user"
+            data={userToAction}
+            onClose={closeModal}
+            onSave={editUser}
+            isOpen={modal == 'EDI'} />
+        }
 
-      {
-        modalDeleteUser && <ModalConfirmation 
-          title="Delete user"
-          text={`Deseja deletar o usuário ${userToAction.name}`}
-          onClose={closeModalAddUser}
-          onResponse={deleteUser}
-          isOpen={modalDeleteUser}/>
-      }
+        {
+          modal && modal == 'DEL' && <ModalConfirmation
+            title="Delete user"
+            text={`Deseja deletar o usuário ${userToAction.name}`}
+            onClose={closeModal}
+            onResponse={deleteUser}
+            isOpen={modal == 'DEL'} />
+        }
 
       </section>
     </main>
