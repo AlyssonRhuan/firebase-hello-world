@@ -28,8 +28,8 @@ function Table(props) {
                                                 props.keys.map((key) => <td>{data[key]}</td>)
                                             }
                                             <td>
-                                                <a ><img className="buttonIcon" src={IconsUtils.Edit} /> Edit</a>
-                                                <a ><img className="buttonIcon" src={IconsUtils.Delete} /> Delete</a>
+                                                <a onClick={() => props.onAction('EDI', data)} ><img className="buttonIcon" src={IconsUtils.Edit} /> Edit</a>
+                                                <a onClick={() => props.onAction('DEL', data)} ><img className="buttonIcon" src={IconsUtils.Delete} /> Delete</a>
                                             </td>
                                         </tr>
                                     )

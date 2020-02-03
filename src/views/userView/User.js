@@ -79,7 +79,9 @@ function User() {
                 <Table
                     datas={users}
                     columns={['Name', 'Login']}
-                    keys={['name', 'login']} />
+                    keys={['name', 'login']} 
+                    onAction={openModal}
+                    />
 
             </section>
             <section>
