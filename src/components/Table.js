@@ -2,43 +2,41 @@ import React from 'react';
 import IconsUtils from '../utils/IconsUtils'
 import Loading from './Loading'
 
+import DataTable from 'react-data-table-component';
+
+// referencia https://www.npmjs.com/package/react-data-table-component#1626-header
+
 function Table(props) {
+
+    const actions = [
+        {
+          name: 'Actions',
+          width: '200px',
+          cell: row => <div className="actionsBar">
+            <a onClick={() => props.onAction('EDI', row)} ><img className="buttonIcon" src={IconsUtils.Edit} /> Edit</a>
+            <a onClick={() => props.onAction('DEL', row)} ><img className="buttonIcon" src={IconsUtils.Delete} /> Delete</a>
+          </div>
+        }
+    ];
+
     return (
-        <main className="App col-12 mx-0 px-0">
-            <section>
-
+        <main className="App col-12 px-0">
+            <section>                
                 {
-                    props.datas
-                        ? <table className="table table-striped">
-                            <thead className="thead-dark">
-                                <tr>
-                                    {
-                                        props.columns.map(
-                                            (column) => <th scope="col">{column}</th>
-                                        )
-                                    }
-                                    <th style={{ width: '350px' }} scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    props.datas && props.datas.map(
-                                        (data) => <tr>
-                                            {
-                                                props.keys.map((key) => <td>{data[key]}</td>)
-                                            }
-                                            <td>
-                                                <a onClick={() => props.onAction('EDI', data)} ><img className="buttonIcon" src={IconsUtils.Edit} /> Edit</a>
-                                                <a onClick={() => props.onAction('DEL', data)} ><img className="buttonIcon" src={IconsUtils.Delete} /> Delete</a>
-                                            </td>
-                                        </tr>
-                                    )
-                                }
-                            </tbody>
-                        </table>
-                        : <Loading />
+                    props.data
+                    ? <DataTable
+                        className="dataTable"
+                        style={{height:'70vh', overflowY:'hidden'}}    
+                        columns={[...props.columns, ...actions]}    //COLUNAS
+                        data={props.data}                           //VALORES
+                        pagination={true}                           //HABILITA PAGINAÇÃO
+                        striped={true}                              //LINHAS INTERVALADAS DE COR
+                        noHeader={true}                             //RETIRAR O CABEÇALHO
+                        fixedHeader={true}
+                        fixedHeaderScrollHeight='59vh'
+                    />
+                    : <Loading />
                 }
-
             </section>
         </main>
     );

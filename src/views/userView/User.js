@@ -3,6 +3,7 @@ import ModalConfirmation from '../../utils/ModalConfirmationUtils'
 import DataBaseService from '../../services/DataBaseService'
 import ModalUser from './ModalUser'
 import Table from '../../components/Table'
+import UserDataTableConfig from './UserDataTableConfig'
 
 const TABLE_NAME = 'users'
 
@@ -77,9 +78,8 @@ function User() {
                 </div>
 
                 <Table
-                    datas={users}
-                    columns={['Name', 'Login']}
-                    keys={['name', 'login']} 
+                    data={users}
+                    columns={UserDataTableConfig}
                     onAction={openModal}
                     />
 
