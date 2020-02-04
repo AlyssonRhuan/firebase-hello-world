@@ -32,8 +32,8 @@ function Table(props) {
                         pagination={true}                           //HABILITA PAGINAÇÃO
                         striped={true}                              //LINHAS INTERVALADAS DE COR
                         noHeader={true}                             //RETIRAR O CABEÇALHO
-                        fixedHeader={true}
-                        fixedHeaderScrollHeight='59vh'
+                        fixedHeader={true}                          //DEIXA O CABEÇALHO FIXO
+                        fixedHeaderScrollHeight='59vh'              //DEFINE ALTURA DO CORPO
                     />
                     : <Loading />
                 }

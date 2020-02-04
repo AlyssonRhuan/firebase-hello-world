@@ -4,6 +4,7 @@ import DataBaseService from '../../services/DataBaseService'
 import ModalUser from './ModalUser'
 import Table from '../../components/Table'
 import UserDataTableConfig from './UserDataTableConfig'
+import Toast from '../../components/Toast'
 
 const TABLE_NAME = 'users'
 
@@ -33,6 +34,7 @@ function User() {
     async function getAllUsers() {
         const usuarios = await DataBaseService.getAll(TABLE_NAME)
         setUsers(usuarios)
+        Toast.Success("Teste")
     }
 
     function addUser(dados) {
