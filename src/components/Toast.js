@@ -1,52 +1,77 @@
-import { useToasts } from 'react-toast-notifications'
-import React from 'react';
+
+import { toast } from 'react-toastify';
+import { css } from 'glamor';
 
 export default class Toast {
-  static Success = ({ content }) => {
-    const { addToast } = useToasts()
-    return (
-      <Button onClick={() => addToast(content, {
-        appearance: 'success',
-        autoDismiss: true,
-      })}>
-        Add Toast
-      </Button>
-    )
-  }
-
-  static Error = ({ content }) => {
-    const { addToast } = useToasts()
-    return (
-      <Button onClick={() => addToast(content, {
-        appearance: 'error',
-        autoDismiss: true,
-      })}>
-        Add Toast
-      </Button>
-    )
-  }
-
-  static Warning = ({ content }) => {
-    const { addToast } = useToasts()
-    return (
-      <Button onClick={() => addToast(content, {
-        appearance: 'warning',
-        autoDismiss: true,
-      })}>
-        Add Toast
-      </Button>
-    )
-  }
-
-  static Info = ({ content }) => {
-    const { addToast } = useToasts()
-    return (
-      <Button onClick={() => addToast(content, {
-        appearance: 'info',
-        autoDismiss: true,
-      })}>
-        Add Toast
-      </Button>
-    )
-  }
+    static success(message){
+        return toast.success(message,
+            {
+                className: css({
+                    borderLeft: '10px solid #07C50E',                    
+                    background: '#9dfba0 !important',
+                    color: 'black'
+                })
+            }
+        )
+    };
+    
+    static info(message){
+        return toast.info(message,
+            {
+                className: css({
+                    borderLeft: '10px solid #41A3E2',                    
+                    background: '#a6d5f2 !important',
+                    color: 'black'
+                })
+            }
+        )
+    };
+    
+    static warn(message){
+        return toast.warn(message,
+            {
+                className: css({
+                    borderLeft: '10px solid #F3CA12',                    
+                    background: '#fae99e !important',
+                    color: 'black'
+                })
+            }
+        )
+    };
+    
+    static error(message){
+        return toast.error(message,
+            {
+                className: css({
+                    borderLeft: '10px solid #E85642',                    
+                    background: '#f4aea4 !important',
+                    color: 'black'
+                })
+            }
+        )
+    };
+    
+    static white(message){
+        return toast(message,
+            {
+                className: css({
+                    borderLeft: '10px solid #ffffff',                    
+                    background: '#ffffff !important',
+                    color: 'black'
+                })
+            }
+        )
+    };
+    
+    static black(message){
+        return toast.success(message,
+            {
+                className: css({
+                    borderLeft: '10px solid #000000',                    
+                    background: '#000000 !important',
+                    color: 'white'
+                })
+            }
+        )
+    };
 }

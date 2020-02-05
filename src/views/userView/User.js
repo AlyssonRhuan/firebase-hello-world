@@ -34,20 +34,26 @@ function User() {
     async function getAllUsers() {
         const usuarios = await DataBaseService.getAll(TABLE_NAME)
         setUsers(usuarios)
-        Toast.Success("Teste")
     }
 
     function addUser(dados) {
         DataBaseService.push(TABLE_NAME, dados);
+        Toast.success("Usuário adicionado!")
     }
 
     function editUser(dados) {
         DataBaseService.update(TABLE_NAME, dados.key, dados);
+        Toast.success("Usuário atualizado!");
     }
 
     function deleteUser(validacao) {
         if (validacao) {
             DataBaseService.delete(TABLE_NAME, userToAction.key);
+            Toast.success("Usuário removido!");
+        }
+        else
+        {
+            Toast.warn("Ação cancelada!");
         }
 
         closeModal();
