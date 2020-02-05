@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 
 function ModalComponent(props) {
     const [isOpen, setIsOpen] = useState(false)
-    const [user, setUser] = useState("")
+    const [category, setCategory] = useState("")
     
   useEffect(() => {
     setIsOpen(props.isOpen);
@@ -12,7 +12,7 @@ function ModalComponent(props) {
 
   function onEditModal(){
     if(props.data != undefined){
-      setUser(props.data)
+      setCategory(props.data)
     }
   }
 
@@ -22,7 +22,7 @@ function ModalComponent(props) {
   }
 
   function saveModal(){ 
-    props.onSave(user)
+    props.onSave(category)
     closeModal()
   }
 
@@ -38,18 +38,8 @@ function ModalComponent(props) {
                 <ModalBody>
                   <div class="form-group">
                     <label for='userName'>Name</label>
-                    <input type='text' class="form-control" id='userName' placeholder='User name'
-                      onChange={event => setUser({...user, name:event.target.value})} value={user.name}/>
-                  </div>   
-                  <div class="form-group">
-                    <label for='userLogin'>Login</label>
-                    <input type='text' class="form-control" id='userLogin' placeholder='User login'
-                      onChange={event => setUser({...user, login:event.target.value})} value={user.login}/>
-                  </div>   
-                  <div class="form-group">
-                    <label for='userPass'>Password</label>
-                    <input type='password' class="form-control" id='userPass' placeholder='User password'
-                      onChange={event => setUser({...user, pass:event.target.value})} value={user.pass}/>
+                    <input type='text' class="form-control" id='categoryName' placeholder='Category name'
+                      onChange={event => setCategory({...category, name:event.target.value})} value={category.name}/>
                   </div>   
                 </ModalBody>
 

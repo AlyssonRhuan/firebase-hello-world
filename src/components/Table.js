@@ -11,10 +11,10 @@ function Table(props) {
     const actions = [
         {
           name: 'Actions',
-          width: '200px',
+          width: '150px',
           cell: row => <div className="actionsBar">
-            <a onClick={() => props.onAction('EDI', row)} ><img className="buttonIcon" src={IconsUtils.Edit} /> Edit</a>
-            <a onClick={() => props.onAction('DEL', row)} ><img className="buttonIcon" src={IconsUtils.Delete} /> Delete</a>
+            <a onClick={() => props.onAction('EDI', row)} data-toggle="tooltip" title="Edit"><img className="buttonIcon" src={IconsUtils.Edit}/></a>
+            <a onClick={() => props.onAction('DEL', row)} data-toggle="tooltip" title="Delete"><img className="buttonIcon" src={IconsUtils.Delete}/></a>
           </div>
         }
     ];
