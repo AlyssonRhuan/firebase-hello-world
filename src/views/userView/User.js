@@ -32,8 +32,8 @@ function User() {
     // FUNÇÕES 
 
     async function getAllUsers() {
-        const usuarios = await DataBaseService.getAll(TABLE_NAME)
-        setUsers(usuarios)
+        const dados = await DataBaseService.getAll(TABLE_NAME)
+        setUsers(dados)
     }
 
     function addUser(dados) {

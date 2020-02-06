@@ -1,40 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import FirebaseService from '../../services/FirebaseService'
-import IconsUtils from '../../utils/IconsUtils'
-import Loading from '../../components/Loading'
 import ModalProduct from './ModalProduct'
+import Table from '../../components/Table'
+import ProductDataTableConfig from './ProductDataTableConfig'
+import DataBaseService from '../../services/DataBaseService'
+import Toast from '../../components/Toast'
+import ModalConfirmation from '../../utils/ModalConfirmationUtils'
 
 const TABLE_NAME = 'products'
 
 function Product() {
   const [products, setProducts] = useState();
-  const [modalAddProduct, setModalAddProduct] = useState(false);
+  const [productToAction, setProductToAction] = useState();
+  const [modal, setModal] = useState(false);
   
   useEffect( async() => {
     getAllProducts();
   }, [])  
- 
+
+  // FUNÇÕES PARA ABRIR MODAL
+
+  function openModal(modal, product) {
+      setModal(modal);
+      setProductToAction(product);
+  }
+
+  function closeModal() {
+      setModal(undefined);
+      getAllProducts();
+  }
 
   // FUNÇÕES 
+
   async function getAllProducts() {
-    const produtos = await FirebaseService.getAll(TABLE_NAME)
-    setProducts(produtos)
-}
-
-function addProduct(dados){
-    const idProduct = FirebaseService.push(TABLE_NAME, dados);
+      const dados = await DataBaseService.getAll(TABLE_NAME)
+      setProducts(dados)
   }
 
-    // FUNÇOES PARA ABRIR MODAL
-function openModalAddProduct(){
-    setModalAddProduct(true);
+  function addProduct(dados) {
+      DataBaseService.push(TABLE_NAME, dados);
+      Toast.success("Produto adicionado!")
   }
 
-  function closeModalAddProduct(){
-    setModalAddProduct(false);
+  function editProduct(dados) {
+      DataBaseService.update(TABLE_NAME, dados.key, dados);
+      Toast.success("Produto atualizado!");
   }
 
+  function deleteProduct(validacao) {
+      if (validacao) {
+          DataBaseService.delete(TABLE_NAME, productToAction.key);
+          Toast.success("Produto removido!");
+      }
+      else
+      {
+          Toast.warn("Ação cancelada!");
+      }
 
+      closeModal();
+  }
+ 
   // RENDER
 
   return (
@@ -45,7 +69,7 @@ function openModalAddProduct(){
         <nav aria-label="breadcrumb" className="pt-3">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="/">Home</a></li>
-            <li className="breadcrumb-item active" aria-current="page">User</li>
+            <li className="breadcrumb-item active" aria-current="page">Product</li>
           </ol>
         </nav>
 
@@ -55,50 +79,48 @@ function openModalAddProduct(){
             <h1 className="display-4">Products</h1>
           </span>
           <span>
-            <button type="button" className="btn btn-success ml-2" onClick={() => openModalAddProduct()}>
+            <button type="button" className="btn btn-success ml-2" onClick={() => openModal('ADD', undefined)}>
               Add Product
             </button>
           </span>
         </div>
 
-        {/* TABELA */}
-        {
-          products
-          ? <table className="table table-striped">
-              <thead className="thead-dark">
-                <tr>
-                  <th scope="col">Nome</th>
-                  <th style={{width:'350px'}} scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  products && products.map(
-                    (product) => <tr>
-                      <td>{product.name}</td>
-                      <td>
-                        <a><img alt="ícone de editar" className="buttonIcon" src={IconsUtils.Edit} /> Edit</a>
-                        <a><img alt="ícone de deletar" className="buttonIcon" src={IconsUtils.Delete}/> Delete</a>
-                      </td>
-                    </tr>
-                  )
-                }  
-              </tbody>
-            </table>
-          : <Loading />
-        }
-        
+        <Table
+            data={products}
+            columns={ProductDataTableConfig}
+            onAction={openModal}
+            />
 
         </section>
         <section>
-        {
-            modalAddProduct && <ModalProduct 
-            title="Add product"
-            data={undefined}
-            onClose={closeModalAddUser}
-            onSave={addProduct}
-            isOpen={modalAddProduct}/>
-        }
+
+          {/* MODAIS */}
+          {
+              modal && modal == 'ADD' && <ModalProduct
+                  title="Add product"
+                  data={undefined}
+                  onClose={closeModal}
+                  onSave={addProduct}
+                  isOpen={modal == 'ADD'} />
+          }
+
+          {
+              modal && modal == 'EDI' && <ModalProduct
+                  title="Edit product"
+                  data={productToAction}
+                  onClose={closeModal}
+                  onSave={editProduct}
+                  isOpen={modal == 'EDI'} />
+          }
+
+          {
+              modal && modal == 'DEL' && <ModalConfirmation
+                  title="Delete product"
+                  text={`Deseja deletar o produto ${productToAction.name}`}
+                  onClose={closeModal}
+                  onResponse={deleteProduct}
+                  isOpen={modal == 'DEL'} />
+          }
 
         </section>
     </main>
