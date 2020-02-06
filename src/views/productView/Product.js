@@ -32,8 +32,8 @@ function Product() {
   // FUNÇÕES 
 
   async function getAllProducts() {
-      const dados = await DataBaseService.getAll(TABLE_NAME)
-      setProducts(dados)
+    const dados = await DataBaseService.getAll(TABLE_NAME)
+    setProducts(dados)
   }
 
   function addProduct(dados) {
