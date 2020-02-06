@@ -1,3 +1,3 @@
 export default {        
-    AppName: 'Meu portal',
+    AppName: 'Gerenciador de E-Commerce',
 }

@@ -3,6 +3,9 @@ import {BrowserRouter as Router, Switch, Route, NavLink, Link } from "react-rout
 import Rotas from './configs/Rotas'
 import GlobablConfig from './configs/Global'
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -16,7 +19,9 @@ function App() {
   return (    
     <Router>
       <div className="container-fluid">
-        <div className="row">        
+        <div className="row">   
+        
+          <ToastContainer />     
 
           {/* BARRA SUPERIOR */}
           <header style={{color:'white'}} className="col-12 navbar navbar-dark bg-primary justify-content-between px-5">

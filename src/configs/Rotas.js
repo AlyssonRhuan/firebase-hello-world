@@ -1,6 +1,8 @@
 import HomeView from '../views/homeView/Home'
 import UserView from '../views/userView/User'
 import ProductView from '../views/productView/Product'
+import CategoryView from '../views/categoryView/Category'
+
 
 export default [
     {        
@@ -16,9 +18,15 @@ export default [
         view: UserView
     },
     {        
-        id: 3, 
+        id: 3,
         path: '/product', 
         label: 'Product',
         view: ProductView
+    },
+    {
+        id: 4,
+        path: '/category', 
+        label: 'Category',
+        view: CategoryView
     }
 ]

@@ -3,12 +3,10 @@ import {firebaseDatabase} from '../utils/firebaseUtils'
 // referencia https://blog.tecsinapse.com.br/criando-uma-aplica%C3%A7%C3%A3o-react-firebase-passo-a-passo-9ebc5a8a442f
 
 export default class FirebaseService {
-    static getAll = (table, size = 10) => new Promise((resolve, reject) => {
+    static getAll = (table) => new Promise((resolve, reject) => {
         try{
             // CONSTRUÇÃO DA QUERY
-            const query = firebaseDatabase
-                .ref(table)
-                .limitToLast(size);
+            const query = firebaseDatabase.ref(table);
 
             // EXECUTANDO E PREENCHENDO ITENS
             query.on('value', dataSnapshot => {
@@ -19,24 +17,13 @@ export default class FirebaseService {
                     items.push(item);
                 });
                 resolve(items);
-            });
-            
+            });            
         }
         catch(error){
             console.log(error);
             reject([]);
         }
     });
-    
-    static getAllPaginate = (table, pagina, size = 10) => new Promise((resolve, reject)=>{
-        try {
-             
-        } 
-        catch (error) {            
-            console.log(error);
-            reject([]);
-        }
-    })
 
     static getByKey = (table, size = 10) => new Promise((resolve, reject) => {
         try{
@@ -72,7 +59,7 @@ export default class FirebaseService {
 
     static update = (table, id, object) => new Promise((resolve, reject) => {
         try {   
-            const ref = firebaseDatabase.ref(table).update({object});
+            const ref = firebaseDatabase.ref(table + '/' + id).update(object);
             resolve(id);        
         } catch (error) {
             console.log(error);
