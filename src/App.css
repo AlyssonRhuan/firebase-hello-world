@@ -52,7 +52,9 @@ header a:hover {
 }
 
 .sideBarMenuClose {
-  color: white;
+  color: white !important;
+  
+  cursor: pointer;
   font-size: 20px;
   text-align: right;
 }

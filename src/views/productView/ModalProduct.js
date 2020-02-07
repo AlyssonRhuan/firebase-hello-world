@@ -9,7 +9,7 @@ function ModalComponent(props) {
   // VARIAVEIS UTILIZAVEIS NO MODAL
   const [listCategorys, setListCategorys] = useState();
     
-  useEffect(async() => {
+  useEffect(() => {
     getListCategorys();
     setIsOpen(props.isOpen);
     onEditModal();
@@ -17,7 +17,6 @@ function ModalComponent(props) {
 
   async function getListCategorys() {
     const dados = await DataBaseService.getAll('categorys')
-    debugger
     setListCategorys(dados)
   }
 
@@ -33,7 +32,6 @@ function ModalComponent(props) {
   }
 
   function saveModal(){ 
-    debugger
     props.onSave(product)
     closeModal()
   }
@@ -48,27 +46,27 @@ function ModalComponent(props) {
                 </ModalHeader>
                 
                 <ModalBody>
-                  <div class="form-group">
+                  <div className="form-group">
                     <label for='productName'>Name</label>
-                    <input type='text' class="form-control" id='productName' placeholder='Product name'
+                    <input type='text' className="form-control" id='productName' placeholder='Product name'
                       onChange={event => setProduct({...product, name:event.target.value})} value={product.name}/>
                   </div>   
-                  <div class="form-group">
+                  <div className="form-group">
                     <label for="productCategory">Category</label>
-                    <select class="form-control" id="productCategory" onChange={event => setProduct({...product, category:event.target.value})} value={product.category}>
+                    <select className="form-control" id="productCategory" onChange={event => setProduct({...product, category:event.target.value})} value={product.category}>
+                      <option></option>
                       {
                         listCategorys && listCategorys.map((category) => 
                           <option>{category.name}</option>
                         )
                       }
                     </select>
-                      {/* onChange={event => setProduct({...product, category:event.target.value})} value={product.category}/> */}
                   </div>     
                 </ModalBody>
 
                 <ModalFooter>
-                    <button type="button" onClick={() => closeModal()} class="btn btn-danger">Cancel</button>
-                    <button type="button" onClick={() => saveModal()} class="btn btn-success">Save</button>
+                    <button type="button" onClick={() => closeModal()} className="btn btn-danger">Cancel</button>
+                    <button type="button" onClick={() => saveModal()} className="btn btn-success">Save</button>
                 </ModalFooter>
 
             </Modal>

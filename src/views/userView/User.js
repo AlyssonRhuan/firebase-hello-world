@@ -13,7 +13,7 @@ function User() {
     const [userToAction, setUserToAction] = useState()
     const [modal, setModal] = useState(undefined)
 
-    useEffect(async () => {
+    useEffect(() => {
         getAllUsers();
     }, [])
 
@@ -96,30 +96,30 @@ function User() {
 
                 {/* MODAIS */}
                 {
-                    modal && modal == 'ADD' && <ModalUser
+                    modal && modal === 'ADD' && <ModalUser
                         title="Add user"
                         data={undefined}
                         onClose={closeModal}
                         onSave={addUser}
-                        isOpen={modal == 'ADD'} />
+                        isOpen={modal === 'ADD'} />
                 }
 
                 {
-                    modal && modal == 'EDI' && <ModalUser
+                    modal && modal === 'EDI' && <ModalUser
                         title="Edit user"
                         data={userToAction}
                         onClose={closeModal}
                         onSave={editUser}
-                        isOpen={modal == 'EDI'} />
+                        isOpen={modal === 'EDI'} />
                 }
 
                 {
-                    modal && modal == 'DEL' && <ModalConfirmation
+                    modal && modal === 'DEL' && <ModalConfirmation
                         title="Delete user"
                         text={`Deseja deletar o usuário ${userToAction.name}`}
                         onClose={closeModal}
                         onResponse={deleteUser}
-                        isOpen={modal == 'DEL'} />
+                        isOpen={modal === 'DEL'} />
                 }
 
             </section>

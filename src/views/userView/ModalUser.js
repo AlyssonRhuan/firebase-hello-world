@@ -36,26 +36,26 @@ function ModalComponent(props) {
                 </ModalHeader>
                 
                 <ModalBody>
-                  <div class="form-group">
+                  <div className="form-group">
                     <label for='userName'>Name</label>
-                    <input type='text' class="form-control" id='userName' placeholder='User name'
+                    <input type='text' className="form-control" id='userName' placeholder='User name'
                       onChange={event => setUser({...user, name:event.target.value})} value={user.name}/>
                   </div>   
-                  <div class="form-group">
+                  <div className="form-group">
                     <label for='userLogin'>Login</label>
-                    <input type='text' class="form-control" id='userLogin' placeholder='User login'
+                    <input type='text' className="form-control" id='userLogin' placeholder='User login'
                       onChange={event => setUser({...user, login:event.target.value})} value={user.login}/>
                   </div>   
-                  <div class="form-group">
+                  <div className="form-group">
                     <label for='userPass'>Password</label>
-                    <input type='password' class="form-control" id='userPass' placeholder='User password'
+                    <input type='password' className="form-control" id='userPass' placeholder='User password'
                       onChange={event => setUser({...user, pass:event.target.value})} value={user.pass}/>
                   </div>   
                 </ModalBody>
 
                 <ModalFooter>
-                    <button type="button" onClick={() => closeModal()} class="btn btn-danger">Cancel</button>
-                    <button type="button" onClick={() => saveModal()} class="btn btn-success">Save</button>
+                    <button type="button" onClick={() => closeModal()} className="btn btn-danger">Cancel</button>
+                    <button type="button" onClick={() => saveModal()} className="btn btn-success">Save</button>
                 </ModalFooter>
 
             </Modal>

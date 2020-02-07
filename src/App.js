@@ -39,20 +39,20 @@ function App() {
           {/* MENU LATERAL */}
           <div style={{left:`${menuAtivo ? '0px' : '-300px' }`}} className="sideBarMenu">       
             <ul className="nav nav-pills flex-column my-3">              
-              <Link 
+              <a 
                 onClick={()=>setMenuAtivo(false)}
                 className="nav-link sideBarMenuClose">
                   Close
-              </Link>
+              </a>
               {
-                Rotas.map(
-                  (rota) => <li className="nav-item">
-                    <NavLink 
-                      exact={true} 
+                Rotas && Rotas.map(
+                  (rota, key) => <li className="nav-item" key = {key} >
+                    <NavLink
+                      exact = {true} 
                       activeClassName='active' 
                       className="nav-link"
                       onClick={()=>setMenuAtivo(false)}
-                      to={rota.path}>
+                      to={rota && rota.path}>
                         {rota.label}
                       </NavLink>
                   </li>   
@@ -65,7 +65,7 @@ function App() {
           <Switch className="col-12">
             {
               Rotas.map(
-                (rota) => <Route exact path={rota.path}>
+                (rota, key) => <Route exact path={rota.path} key={key}>
                     {
                       React.createElement(rota.view)
                     }

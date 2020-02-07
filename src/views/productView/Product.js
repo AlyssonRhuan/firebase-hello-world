@@ -13,7 +13,7 @@ function Product() {
   const [productToAction, setProductToAction] = useState();
   const [modal, setModal] = useState(false);
   
-  useEffect( async() => {
+  useEffect(() => {
     getAllProducts();
   }, [])  
 
@@ -96,30 +96,30 @@ function Product() {
 
           {/* MODAIS */}
           {
-              modal && modal == 'ADD' && <ModalProduct
+              modal && modal === 'ADD' && <ModalProduct
                   title="Add product"
                   data={undefined}
                   onClose={closeModal}
                   onSave={addProduct}
-                  isOpen={modal == 'ADD'} />
+                  isOpen={modal === 'ADD'} />
           }
 
           {
-              modal && modal == 'EDI' && <ModalProduct
+              modal && modal === 'EDI' && <ModalProduct
                   title="Edit product"
                   data={productToAction}
                   onClose={closeModal}
                   onSave={editProduct}
-                  isOpen={modal == 'EDI'} />
+                  isOpen={modal === 'EDI'} />
           }
 
           {
-              modal && modal == 'DEL' && <ModalConfirmation
+              modal && modal === 'DEL' && <ModalConfirmation
                   title="Delete product"
                   text={`Deseja deletar o produto ${productToAction.name}`}
                   onClose={closeModal}
                   onResponse={deleteProduct}
-                  isOpen={modal == 'DEL'} />
+                  isOpen={modal === 'DEL'} />
           }
 
         </section>

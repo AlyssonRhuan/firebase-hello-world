@@ -5,7 +5,7 @@ function Home() {
   return (
     <main className="App col-12 pt-5">
       <section>
-        <h1 class="display-4">Bem-vindo ao {GlobablConfig.AppName}</h1>
+        <h1 className="display-4">Bem-vindo ao {GlobablConfig.AppName}</h1>
       </section>
     </main>
   );

@@ -14,7 +14,7 @@ function Category() {
     const [categoryToAction, setCategoryToAction] = useState()
     const [modal, setModal] = useState(undefined)
 
-    useEffect(async () => {
+    useEffect(() => {
         getAllCategorys();
     }, [])
 
@@ -97,30 +97,30 @@ function Category() {
 
                 {/* MODAIS */}
                 {
-                    modal && modal == 'ADD' && <ModalCategory
+                    modal && modal === 'ADD' && <ModalCategory
                         title="Add category"
                         data={undefined}
                         onClose={closeModal}
                         onSave={addCategory}
-                        isOpen={modal == 'ADD'} />
+                        isOpen={modal === 'ADD'} />
                 }
 
                 {
-                    modal && modal == 'EDI' && <ModalCategory
+                    modal && modal === 'EDI' && <ModalCategory
                         title="Edit category"
                         data={categoryToAction}
                         onClose={closeModal}
                         onSave={editCategory}
-                        isOpen={modal == 'EDI'} />
+                        isOpen={modal === 'EDI'} />
                 }
 
                 {
-                    modal && modal == 'DEL' && <ModalConfirmation
+                    modal && modal === 'DEL' && <ModalConfirmation
                         title="Delete category"
                         text={`Deseja deletar a categoria ${categoryToAction.name}`}
                         onClose={closeModal}
                         onResponse={deleteCategory}
-                        isOpen={modal == 'DEL'} />
+                        isOpen={modal === 'DEL'} />
                 }
 
             </section>
